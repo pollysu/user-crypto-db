@@ -1,6 +1,6 @@
-package com.jaitlpro.usercryptodb.crypto;
+package com.jaitlpro.usercryptodb.crypt;
 
-import com.jaitlpro.usercryptodb.crypto.key.AESKey;
+import com.jaitlpro.usercryptodb.crypt.key.AESKey;
 import com.jaitlpro.usercryptodb.entry.UserCryptEntry;
 import com.jaitlpro.usercryptodb.entry.UserEntry;
 
@@ -18,7 +18,7 @@ public class CryptingUser {
         SecretKey key = AESKey.generateAESKey();
 
         byte[] AESKeyByte = AESKey.secretKeyToByte(key);
-        byte[] AESKeyCrypt = CryptingAESKey.encryptAESKey(AESKeyByte);
+        byte[] AESKeyCrypt = RSACrypting.encryptAESKey(AESKeyByte);
 
         cryptUser.setCryptoKey(AESKeyCrypt);
         cryptUser.setLogin(user.getLogin());
@@ -58,7 +58,7 @@ public class CryptingUser {
     public static UserEntry decryptUser(UserCryptEntry cryptUser) {
 
         byte[] AESKeyCrypt = cryptUser.getCryptKey();
-        byte[] AESKeyByte = CryptingAESKey.decryptAESKey(AESKeyCrypt);
+        byte[] AESKeyByte = RSACrypting.decryptAESKey(AESKeyCrypt);
 
         SecretKey key = AESKey.secretKeyFromByte(AESKeyByte);
 

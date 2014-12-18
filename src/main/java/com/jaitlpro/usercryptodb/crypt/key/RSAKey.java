@@ -1,4 +1,4 @@
-package com.jaitlpro.usercryptodb.crypto.key;
+package com.jaitlpro.usercryptodb.crypt.key;
 
 import java.io.*;
 import java.security.KeyFactory;
@@ -9,9 +9,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-/**
- * Created by Igor on 18.12.2014.
- */
 public class RSAKey {
     public static PublicKey getPublicKey() {
 

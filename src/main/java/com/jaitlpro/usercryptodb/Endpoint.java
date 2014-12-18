@@ -1,10 +1,9 @@
 package com.jaitlpro.usercryptodb;
 
-import com.jaitlpro.usercryptodb.crypto.CryptingUser;
+import com.jaitlpro.usercryptodb.crypt.CryptingUser;
 import com.jaitlpro.usercryptodb.dao.UserDAO;
 import com.jaitlpro.usercryptodb.entry.UserCryptEntry;
 import com.jaitlpro.usercryptodb.entry.UserEntry;
-import com.jaitlpro.usercryptodb.exception.UserIsExistException;
 import com.jaitlpro.usercryptodb.exception.UserNotFoundException;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;

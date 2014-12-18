@@ -1,6 +1,4 @@
-package com.jaitlpro.usercryptodb.crypto.key;
-
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+package com.jaitlpro.usercryptodb.crypt.key;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;

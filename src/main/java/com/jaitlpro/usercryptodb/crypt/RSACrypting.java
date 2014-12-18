@@ -1,6 +1,6 @@
-package com.jaitlpro.usercryptodb.crypto;
+package com.jaitlpro.usercryptodb.crypt;
 
-import com.jaitlpro.usercryptodb.crypto.key.RSAKey;
+import com.jaitlpro.usercryptodb.crypt.key.RSAKey;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -9,7 +9,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class CryptingAESKey {
+public class RSACrypting {
     public static byte[] encryptAESKey(byte[] key) {
 
         Cipher cipher = null;
