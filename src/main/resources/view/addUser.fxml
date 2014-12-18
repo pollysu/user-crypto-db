@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jaitlpro.usercryptodb.dialog.AddUserController">
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <FlowPane alignment="TOP_CENTER">
+                    <children>
+                        <Label fx:id="dialogTitle" text="Добавления пользователя" />
+                    </children>
+                </FlowPane>
+                <VBox styleClass="vbox">
+                    <children>
+                        <Label text="Логин:" />
+                        <TextField fx:id="login" />
+                    </children>
+                </VBox>
+                <VBox styleClass="vbox">
+                    <children>
+                        <Label text="ФИО:" />
+                        <TextField fx:id="FIO" />
+                    </children>
+                </VBox>
+                <VBox styleClass="vbox">
+                    <children>
+                        <Label text="Адрес:" />
+                        <TextField fx:id="address" />
+                    </children>
+                </VBox>
+                <VBox styleClass="vbox">
+                    <children>
+                        <Label text="Номер карты:" />
+                        <TextField fx:id="numberCard" />
+                    </children>
+                </VBox>
+                <VBox styleClass="vbox">
+                    <children>
+                        <Label text="CVV код карты:" />
+                        <TextField fx:id="CVVCode" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </top>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="error" visible="false" />
+            <HBox alignment="TOP_CENTER">
+               <children>
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveUser" text="Сохранить" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

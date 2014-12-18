@@ -1,0 +1,19 @@
+.button, .text-field, .label {
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 15;
+}
+
+.vbox {
+    -fx-padding: 5;
+}
+
+#dialogTitle {
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
+
+#error {
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-padding: 10;
+}

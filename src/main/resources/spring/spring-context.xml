@@ -21,5 +21,8 @@
     <!-- Use this post processor to translate any MongoExceptions thrown in @Repository annotated classes -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
+    <bean class="com.jaitlpro.usercryptodb.dialog.AddUserController" />
+    <bean class="com.jaitlpro.usercryptodb.dialog.MainMenuController" />
+
 
 </beans>
