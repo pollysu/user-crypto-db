@@ -7,7 +7,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 public class UserEntry {
-    private String Id;
     private String login;
     private String fullName;
     private String address;
@@ -23,15 +22,6 @@ public class UserEntry {
     }
 
     public UserEntry() {
-    }
-
-    public String getId() {
-
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
     }
 
     public String getLogin() {
@@ -93,8 +83,7 @@ public class UserEntry {
     @Override
     public String toString() {
         return "UserEntry{" +
-                "Id='" + Id + '\'' +
-                ", login='" + login + '\'' +
+                "login='" + login + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", address='" + address + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +

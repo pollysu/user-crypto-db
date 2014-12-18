@@ -7,22 +7,20 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by Igor on 18.12.2014.
- */
 public class AESKey {
 
     public static SecretKey generateAESKey() {
-
-        SecretKey key = null;
-
+        KeyGenerator generator = null;
         try {
-            key =  KeyGenerator.getInstance("AES").generateKey();
+            generator = KeyGenerator.getInstance("AES");
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        return key;
+        generator.init(128);
+
+        return generator.generateKey();
     }
 
     public static byte[] secretKeyToByte(SecretKey key) {

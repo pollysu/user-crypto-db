@@ -1,5 +1,6 @@
 package com.jaitlpro.usercryptodb.crypto;
 
+import com.jaitlpro.usercryptodb.entry.UserCryptoEntry;
 import com.jaitlpro.usercryptodb.entry.UserEntry;
 
 import javax.crypto.*;
@@ -8,21 +9,16 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
-public class EnocryptUser {
-    SecretKey key;
+public class CryptingUser {
 
-    public byte[] enocrypt(UserEntry user) {
+    public static UserCryptoEntry encryptUser(UserEntry user) {
 
+        UserCryptoEntry cryptoUser = new UserCryptoEntry();
 
-        KeyGenerator keyGen = null;
-        try {
-            keyGen = KeyGenerator.getInstance("AES");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        SecretKey key = AESKey.generateAESKey();
 
-        keyGen.init(128);
-        key = keyGen.generateKey();
+        cryptoUser.setCryptoKey(AESKey.secretKeyToByte(key));
+        cryptoUser.setLogin(user.getLogin());
 
         Cipher cipher = null;
         try {
@@ -39,10 +35,10 @@ public class EnocryptUser {
             e.printStackTrace();
         }
 
-        byte[] cipherText = null;
+        byte[] cipherData = null;
 
         try {
-            cipherText = cipher.doFinal(user.toXML().getBytes("UTF8"));
+            cipherData = cipher.doFinal(user.toXML().getBytes("UTF8"));
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
@@ -51,18 +47,15 @@ public class EnocryptUser {
             e.printStackTrace();
         }
 
-        System.out.println( "Finish encryption: " );
-        try {
-            System.out.println( new String(cipherText, "UTF8") );
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        cryptoUser.setCryptoData(cipherData);
 
-
-        return cipherText;
+        return cryptoUser;
     }
 
-    public String decrytpoUser(byte[] cipherText) {
+    public static UserEntry decryptUser(UserCryptoEntry cryptoUser) {
+
+        SecretKey key = AESKey.secretKeyFromByte(cryptoUser.getCryptoKey());
+
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -81,25 +74,21 @@ public class EnocryptUser {
         byte[] newPlainText = new byte[0];
 
         try {
-            newPlainText = cipher.doFinal(cipherText);
+            newPlainText = cipher.doFinal(cryptoUser.getCryptoData());
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
 
-        System.out.println( "Finish decryption: " );
-
-        String user = null;
+        String UserEntryXML = null;
 
         try {
-            user = new String(newPlainText, "UTF8");
-            System.out.println( user);
+            UserEntryXML = new String(newPlainText, "UTF8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-        return user;
+        return UserEntry.getUserEntryFromXML(UserEntryXML);
     }
-
 }
