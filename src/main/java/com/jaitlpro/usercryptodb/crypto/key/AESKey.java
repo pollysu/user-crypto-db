@@ -1,4 +1,4 @@
-package com.jaitlpro.usercryptodb.crypto;
+package com.jaitlpro.usercryptodb.crypto.key;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 

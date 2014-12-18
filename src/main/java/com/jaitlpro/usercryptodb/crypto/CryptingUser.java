@@ -1,24 +1,27 @@
 package com.jaitlpro.usercryptodb.crypto;
 
-import com.jaitlpro.usercryptodb.entry.UserCryptoEntry;
+import com.jaitlpro.usercryptodb.crypto.key.AESKey;
+import com.jaitlpro.usercryptodb.entry.UserCryptEntry;
 import com.jaitlpro.usercryptodb.entry.UserEntry;
 
 import javax.crypto.*;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 public class CryptingUser {
 
-    public static UserCryptoEntry encryptUser(UserEntry user) {
+    public static UserCryptEntry encryptUser(UserEntry user) {
 
-        UserCryptoEntry cryptoUser = new UserCryptoEntry();
+        UserCryptEntry cryptUser = new UserCryptEntry();
 
         SecretKey key = AESKey.generateAESKey();
 
-        cryptoUser.setCryptoKey(AESKey.secretKeyToByte(key));
-        cryptoUser.setLogin(user.getLogin());
+        byte[] AESKeyByte = AESKey.secretKeyToByte(key);
+        byte[] AESKeyCrypt = CryptingAESKey.encryptAESKey(AESKeyByte);
+
+        cryptUser.setCryptoKey(AESKeyCrypt);
+        cryptUser.setLogin(user.getLogin());
 
         Cipher cipher = null;
         try {
@@ -47,14 +50,17 @@ public class CryptingUser {
             e.printStackTrace();
         }
 
-        cryptoUser.setCryptoData(cipherData);
+        cryptUser.setCryptoData(cipherData);
 
-        return cryptoUser;
+        return cryptUser;
     }
 
-    public static UserEntry decryptUser(UserCryptoEntry cryptoUser) {
+    public static UserEntry decryptUser(UserCryptEntry cryptUser) {
 
-        SecretKey key = AESKey.secretKeyFromByte(cryptoUser.getCryptoKey());
+        byte[] AESKeyCrypt = cryptUser.getCryptKey();
+        byte[] AESKeyByte = CryptingAESKey.decryptAESKey(AESKeyCrypt);
+
+        SecretKey key = AESKey.secretKeyFromByte(AESKeyByte);
 
         Cipher cipher = null;
         try {
@@ -74,7 +80,7 @@ public class CryptingUser {
         byte[] newPlainText = new byte[0];
 
         try {
-            newPlainText = cipher.doFinal(cryptoUser.getCryptoData());
+            newPlainText = cipher.doFinal(cryptUser.getCryptoData());
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
