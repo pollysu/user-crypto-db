@@ -1,13 +1,11 @@
-package com.jaitlpro.usercryptodb;
+package com.jaitlpro.usercryptodb.spring;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import javafx.fxml.FXMLLoader;
-import javafx.util.Callback;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class SpringFxmlLoader {
 

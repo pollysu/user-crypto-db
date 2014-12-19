@@ -1,11 +1,12 @@
 package com.jaitlpro.usercryptodb.dialog;
 
-import com.jaitlpro.usercryptodb.SpringFxmlLoader;
+import com.jaitlpro.usercryptodb.spring.SpringFxmlLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -33,7 +34,6 @@ public class MainMenuController implements ApplicationContextAware {
 
     @FXML
     private void addUser(ActionEvent event) {
-
         Stage stage = new Stage();
 
         SpringFxmlLoader loader = new SpringFxmlLoader(applicationContext);
@@ -52,6 +52,5 @@ public class MainMenuController implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
-
     }
 }

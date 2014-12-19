@@ -8,12 +8,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * Created by Igor on 19.12.2014.
- */
 public class FindUserByLoginController {
+
+    static final Logger log = Logger.getLogger(FindUserByLoginController.class);
 
     @Autowired
     private Users users;
@@ -51,6 +51,7 @@ public class FindUserByLoginController {
                 displayUserData(userEntry);
             } catch (UserNotFoundException e) {
                 showError(e.getMessage());
+                log.error("UserNotFoundException", e);
             }
 
         }

@@ -1,5 +1,7 @@
 package com.jaitlpro.usercryptodb.crypt.key;
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -10,7 +12,11 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 public class RSAKey {
+
+    static final Logger log = Logger.getLogger(RSAKey.class);
+
     public static PublicKey getPublicKey() {
+        log.info("Get public key from file");
 
         byte[] keyByteArr = getKeyAsBytes("public");
 
@@ -18,7 +24,7 @@ public class RSAKey {
         try {
             kf = KeyFactory.getInstance("RSA");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error("NoSuchAlgorithmException", e);
         }
 
         PublicKey publicKey = null;
@@ -26,20 +32,23 @@ public class RSAKey {
         try {
             publicKey = kf.generatePublic(new X509EncodedKeySpec(keyByteArr));
         } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
+            log.error("InvalidKeySpecException", e);
         }
 
         return publicKey;
     }
 
     public static PrivateKey getPrivateKey() {
+        log.info("Get private key from file");
+
         byte[] keyByteArr = getKeyAsBytes("private");
 
         KeyFactory kf = null;
+
         try {
             kf = KeyFactory.getInstance("RSA");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error("NoSuchAlgorithmException", e);
         }
 
         PrivateKey privateKey = null;
@@ -47,13 +56,15 @@ public class RSAKey {
         try {
             privateKey = kf.generatePrivate(new PKCS8EncodedKeySpec(keyByteArr));
         } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
+            log.error("InvalidKeySpecException", e);
         }
 
         return privateKey;
     }
 
     private static byte[] getKeyAsBytes(String type) {
+        log.info(String.format("Read file with %s key", type));
+
         ClassLoader classLoader = new RSAKey().getClass().getClassLoader();
         InputStream fileStream = classLoader.getResourceAsStream("rsa/" + type + ".key");
 
@@ -62,13 +73,15 @@ public class RSAKey {
         try {
             keyByteArr = getBytes(fileStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("IOException", e);
         }
 
         return keyByteArr;
     }
 
     private static byte[] getBytes(InputStream is) throws IOException {
+
+        log.info("Get byte[] from InputStream");
 
         int len;
         int size = 1024;

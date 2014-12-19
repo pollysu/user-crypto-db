@@ -1,6 +1,7 @@
 package com.jaitlpro.usercryptodb.crypt;
 
 import com.jaitlpro.usercryptodb.crypt.key.RSAKey;
+import org.apache.log4j.Logger;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -10,30 +11,34 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 public class RSACrypting {
-    public static byte[] encryptAESKey(byte[] key) {
 
+    static final Logger log = Logger.getLogger(RSACrypting.class);
+
+    public static byte[] encryptAESKey(byte[] key) {
+        
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error("NoSuchAlgorithmException", e);
         } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
+            log.error("NoSuchPaddingException", e);
         }
 
         try {
             cipher.init(Cipher.ENCRYPT_MODE, RSAKey.getPublicKey());
         } catch (InvalidKeyException e) {
-            e.printStackTrace();
+            log.error("InvalidKeyException", e);
         }
 
         byte[] cipherText = new byte[0];
         try {
             cipherText = cipher.doFinal(key);
+            log.info("Encrypt AES key with RSA");
         } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
+            log.error("IllegalBlockSizeException", e);
         } catch (BadPaddingException e) {
-            e.printStackTrace();
+            log.error("BadPaddingException", e);
         }
 
         return cipherText;
@@ -45,25 +50,26 @@ public class RSACrypting {
         try {
             cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error("NoSuchAlgorithmException", e);
         } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
+            log.error("NoSuchPaddingException", e);
         }
 
         try {
             cipher.init(Cipher.DECRYPT_MODE, RSAKey.getPrivateKey());
         } catch (InvalidKeyException e) {
-            e.printStackTrace();
+            log.error("InvalidKeyException", e);
         }
 
         byte[] newPlainText = new byte[0];
 
         try {
             newPlainText = cipher.doFinal(key);
+            log.info("Decrypt AES key with RSA");
         } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
+            log.error("IllegalBlockSizeException", e);
         } catch (BadPaddingException e) {
-            e.printStackTrace();
+            log.error("BadPaddingException", e);
         }
 
         return newPlainText;

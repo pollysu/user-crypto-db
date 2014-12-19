@@ -1,15 +1,17 @@
 package com.jaitlpro.usercryptodb;
 
-import com.jaitlpro.usercryptodb.dialog.AddUserController;
+import com.jaitlpro.usercryptodb.spring.SpringFxmlLoader;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main extends Application {
+
+   static final Logger log = Logger.getLogger(Main.class);
 
     private final ApplicationContext applicationContext =  new ClassPathXmlApplicationContext("spring/spring-context.xml");
 
@@ -17,6 +19,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        log.info("Load menu window");
+
         Parent root = (Parent) loader.load("view/mainMenu.fxml");
 
         primaryStage.setTitle("Добавление пользователя");

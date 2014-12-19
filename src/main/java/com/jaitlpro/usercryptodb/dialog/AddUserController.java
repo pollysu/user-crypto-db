@@ -9,9 +9,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AddUserController {
+
+    static final Logger log = Logger.getLogger(AddUserController.class);
 
     @Autowired
     private Users users;
@@ -46,10 +49,12 @@ public class AddUserController {
                 users.saveUser(user);
                 clearFields();
             } catch (UserIsExistException e) {
+                log.error("UserIsExistException", e);
                 showError(e.getMessage());
             }
 
         } catch (FieldNotFilledException e) {
+            log.error("FieldNotFilledException", e);
             showError(e.getMessage());
         }
     }
