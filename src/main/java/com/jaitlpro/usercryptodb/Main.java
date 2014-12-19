@@ -11,16 +11,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main extends Application {
 
-   static final Logger log = Logger.getLogger(Main.class);
-
     private final ApplicationContext applicationContext =  new ClassPathXmlApplicationContext("spring/spring-context.xml");
 
     private final SpringFxmlLoader loader = new SpringFxmlLoader(applicationContext);
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        log.info("Load menu window");
-
         Parent root = (Parent) loader.load("view/mainMenu.fxml");
 
         primaryStage.setTitle("Добавление пользователя");

@@ -22,7 +22,7 @@ public class CryptingUser {
 
         SecretKey key = AESKey.generateAESKey();
 
-        log.info(String.format("Encrypt user AED key: %s", user.getLogin()));
+        log.info(String.format("Encrypt user AES key with RSA: %s", user.getLogin()));
         byte[] AESKeyByte = AESKey.secretKeyToByte(key);
         byte[] AESKeyCrypt = RSACrypting.encryptAESKey(AESKeyByte);
 
@@ -67,7 +67,7 @@ public class CryptingUser {
 
         log.info(String.format("Decrypt user: %s", cryptUser.getLogin()));
 
-        log.info(String.format("Decrypt user AED key: %s", cryptUser.getLogin()));
+        log.info(String.format("Decrypt user AES key with RSA: %s", cryptUser.getLogin()));
         byte[] AESKeyCrypt = cryptUser.getCryptKey();
         byte[] AESKeyByte = RSACrypting.decryptAESKey(AESKeyCrypt);
 
