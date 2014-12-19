@@ -16,7 +16,19 @@ public class MainMenuController implements ApplicationContextAware {
 
     @FXML
     private void showFindUserByLogin(ActionEvent event) {
+        Stage stage = new Stage();
 
+        SpringFxmlLoader loader = new SpringFxmlLoader(applicationContext);
+
+        Parent root = (Parent) loader.load("view/findUserByLogin.fxml");
+
+        stage.setTitle("Добавление пользователя");
+        Scene scene = new Scene(root, 500, 400);
+
+        scene.getStylesheets().add("view/style.css");
+
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

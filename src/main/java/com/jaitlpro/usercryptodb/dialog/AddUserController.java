@@ -1,7 +1,7 @@
 package com.jaitlpro.usercryptodb.dialog;
 
 
-import com.jaitlpro.usercryptodb.controller.Users;
+import com.jaitlpro.usercryptodb.user.Users;
 import com.jaitlpro.usercryptodb.entry.UserEntry;
 import com.jaitlpro.usercryptodb.exception.FieldNotFilledException;
 import com.jaitlpro.usercryptodb.exception.UserIsExistException;
@@ -34,7 +34,7 @@ public class AddUserController {
     @FXML
     private void saveUser(ActionEvent event) {
 
-        if(isError)
+        if(isError())
             hideError();
 
         UserEntry user = null;
@@ -54,17 +54,17 @@ public class AddUserController {
         }
     }
 
+    private boolean isError() {
+        return error.isVisible();
+    }
+
     private void showError(String textError) {
         error.setVisible(true);
         error.setText(textError);
-
-        isError = true;
     }
 
     private void hideError() {
         error.setVisible(false);
-
-        isError = false;
     }
 
     private UserEntry getUser() throws FieldNotFilledException {

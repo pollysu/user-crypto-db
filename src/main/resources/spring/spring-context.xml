@@ -23,6 +23,6 @@
 
     <bean class="com.jaitlpro.usercryptodb.dialog.AddUserController" />
     <bean class="com.jaitlpro.usercryptodb.dialog.MainMenuController" />
-
+    <bean class="com.jaitlpro.usercryptodb.dialog.FindUserByLoginController" />
 
 </beans>
