@@ -1,6 +1,5 @@
 package com.jaitlpro.usercryptodb.crypt;
 
-import com.jaitlpro.usercryptodb.crypt.key.AESKey;
 import com.jaitlpro.usercryptodb.entry.UserCryptEntry;
 import com.jaitlpro.usercryptodb.entry.UserEntry;
 import org.apache.log4j.Logger;
@@ -10,24 +9,15 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class CryptingUser {
+public class AESCrypt {
 
-    static final Logger log = Logger.getLogger(CryptingUser.class);
+    static final Logger log = Logger.getLogger(AESCrypt.class);
 
     public static UserCryptEntry encryptUser(UserEntry user) {
 
         log.info(String.format("Encrypt user: %s", user.getLogin()));
 
-        UserCryptEntry cryptUser = new UserCryptEntry();
-
-        SecretKey key = AESKey.generateAESKey();
-
-        log.info(String.format("Encrypt user AES key with RSA: %s", user.getLogin()));
-        byte[] AESKeyByte = AESKey.secretKeyToByte(key);
-        byte[] AESKeyCrypt = RSACrypting.encryptAESKey(AESKeyByte);
-
-        cryptUser.setCryptoKey(AESKeyCrypt);
-        cryptUser.setLogin(user.getLogin());
+        SecretKey AESKey = generateAESKey();
 
         Cipher cipher = null;
         try {
@@ -39,7 +29,7 @@ public class CryptingUser {
         }
 
         try {
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipher.init(Cipher.ENCRYPT_MODE, AESKey);
         } catch (InvalidKeyException e) {
             log.error("InvalidKeyException", e);
         }
@@ -57,7 +47,16 @@ public class CryptingUser {
             log.error("UnsupportedEncodingException", e);
         }
 
-        cryptUser.setCryptoData(cipherData);
+        UserCryptEntry cryptUser = new UserCryptEntry();
+
+        cryptUser.setCryptData(cipherData);
+
+        log.info(String.format("Encrypt user AES key with RSA: %s", user.getLogin()));
+
+        byte[] AESKeyCrypt = RSACrypt.encryptAESKey(AESKey);
+
+        cryptUser.setCryptKey(AESKeyCrypt);
+        cryptUser.setLogin(user.getLogin());
 
         log.info(String.format("Send encrypt user: %s", cryptUser.getLogin()));
         return cryptUser;
@@ -67,11 +66,7 @@ public class CryptingUser {
 
         log.info(String.format("Decrypt user: %s", cryptUser.getLogin()));
 
-        log.info(String.format("Decrypt user AES key with RSA: %s", cryptUser.getLogin()));
-        byte[] AESKeyCrypt = cryptUser.getCryptKey();
-        byte[] AESKeyByte = RSACrypting.decryptAESKey(AESKeyCrypt);
-
-        SecretKey key = AESKey.secretKeyFromByte(AESKeyByte);
+        SecretKey AESKey = RSACrypt.decryptAESKey(cryptUser.getCryptKey());
 
         Cipher cipher = null;
         try {
@@ -83,7 +78,7 @@ public class CryptingUser {
         }
 
         try {
-            cipher.init(Cipher.DECRYPT_MODE, key);
+            cipher.init(Cipher.DECRYPT_MODE, AESKey);
         } catch (InvalidKeyException e) {
             log.error("InvalidKeyException", e);
         }
@@ -91,7 +86,7 @@ public class CryptingUser {
         byte[] newPlainText = new byte[0];
 
         try {
-            newPlainText = cipher.doFinal(cryptUser.getCryptoData());
+            newPlainText = cipher.doFinal(cryptUser.getCryptData());
             log.info(String.format("Decrypt user data: %s", cryptUser.getLogin()));
         } catch (IllegalBlockSizeException e) {
             log.error("IllegalBlockSizeException", e);
@@ -109,5 +104,22 @@ public class CryptingUser {
 
         log.info(String.format("Send decrypt user: %s", cryptUser.getLogin()));
         return UserEntry.getUserEntryFromXML(UserEntryXML);
+    }
+
+    private static SecretKey generateAESKey() {
+
+        log.info("Generate AES key");
+
+        KeyGenerator generator = null;
+        try {
+            generator = KeyGenerator.getInstance("AES");
+
+        } catch (NoSuchAlgorithmException e) {
+            log.error("NoSuchAlgorithmException", e);
+        }
+
+        generator.init(128);
+
+        return generator.generateKey();
     }
 }

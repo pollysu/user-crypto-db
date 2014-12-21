@@ -1,4 +1,4 @@
-package com.jaitlpro.usercryptodb.crypt.key;
+package com.jaitlpro.usercryptodb.crypt;
 
 import org.apache.log4j.Logger;
 
@@ -11,11 +11,11 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-public class RSAKey {
+public class RSAKeyLoader {
 
-    static final Logger log = Logger.getLogger(RSAKey.class);
+    static final Logger log = Logger.getLogger(RSAKeyLoader.class);
 
-    public static PublicKey getPublicKey() {
+    public static PublicKey loadPublicKey() {
         log.info("Get public key from file");
 
         byte[] keyByteArr = getKeyAsBytes("public");
@@ -38,7 +38,7 @@ public class RSAKey {
         return publicKey;
     }
 
-    public static PrivateKey getPrivateKey() {
+    public static PrivateKey loadPrivateKey() {
         log.info("Get private key from file");
 
         byte[] keyByteArr = getKeyAsBytes("private");
@@ -65,7 +65,7 @@ public class RSAKey {
     private static byte[] getKeyAsBytes(String type) {
         log.info(String.format("Read file with %s key", type));
 
-        ClassLoader classLoader = new RSAKey().getClass().getClassLoader();
+        ClassLoader classLoader = new RSAKeyLoader().getClass().getClassLoader();
         InputStream fileStream = classLoader.getResourceAsStream("rsa/" + type + ".key");
 
         byte[] keyByteArr = null;

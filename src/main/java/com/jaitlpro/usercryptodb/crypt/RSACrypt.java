@@ -1,20 +1,19 @@
 package com.jaitlpro.usercryptodb.crypt;
 
-import com.jaitlpro.usercryptodb.crypt.key.RSAKey;
 import org.apache.log4j.Logger;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class RSACrypting {
+public class RSACrypt {
 
-    static final Logger log = Logger.getLogger(RSACrypting.class);
+    static final Logger log = Logger.getLogger(RSACrypt.class);
 
-    public static byte[] encryptAESKey(byte[] key) {
+    public static byte[] encryptAESKey(SecretKey AESKey) {
+
+        byte[] AESKeyByte = secretKeyToByte(AESKey);
         
         Cipher cipher = null;
         try {
@@ -26,14 +25,14 @@ public class RSACrypting {
         }
 
         try {
-            cipher.init(Cipher.ENCRYPT_MODE, RSAKey.getPublicKey());
+            cipher.init(Cipher.ENCRYPT_MODE, RSAKeyLoader.loadPublicKey());
         } catch (InvalidKeyException e) {
             log.error("InvalidKeyException", e);
         }
 
         byte[] cipherText = new byte[0];
         try {
-            cipherText = cipher.doFinal(key);
+            cipherText = cipher.doFinal(AESKeyByte);
             log.info("Encrypt AES key with RSA");
         } catch (IllegalBlockSizeException e) {
             log.error("IllegalBlockSizeException", e);
@@ -44,7 +43,7 @@ public class RSACrypting {
         return cipherText;
     }
 
-    public static byte[] decryptAESKey(byte[] key) {
+    public static SecretKey decryptAESKey(byte[] key) {
 
         Cipher cipher = null;
         try {
@@ -56,7 +55,7 @@ public class RSACrypting {
         }
 
         try {
-            cipher.init(Cipher.DECRYPT_MODE, RSAKey.getPrivateKey());
+            cipher.init(Cipher.DECRYPT_MODE, RSAKeyLoader.loadPrivateKey());
         } catch (InvalidKeyException e) {
             log.error("InvalidKeyException", e);
         }
@@ -72,6 +71,18 @@ public class RSACrypting {
             log.error("BadPaddingException", e);
         }
 
-        return newPlainText;
+        return secretKeyFromByte(newPlainText);
+    }
+
+    public static byte[] secretKeyToByte(SecretKey key) {
+        log.info("Secret key from SecretKey to byte[]");
+
+        return key.getEncoded();
+    }
+
+    public static SecretKey secretKeyFromByte(byte[] key) {
+        log.info("Secret key from byte[] to SecretKey");
+
+        return new SecretKeySpec(key, "AES");
     }
 }

@@ -1,4 +1,4 @@
-package com.jaitlpro.usercryptodb.dialog;
+package com.jaitlpro.usercryptodb.UIControllers;
 
 import com.jaitlpro.usercryptodb.spring.SpringFxmlLoader;
 import javafx.event.ActionEvent;
@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

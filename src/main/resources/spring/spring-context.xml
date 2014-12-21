@@ -15,14 +15,14 @@
     <!-- MongoTemplate for connecting and quering the documents in the database -->
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongo" ref="mongo" />
-        <constructor-arg name="databaseName" value="UserCryptoDB" />
+        <constructor-arg name="databaseName" value="UserCryptDB" />
     </bean>
 
     <!-- Use this post processor to translate any MongoExceptions thrown in @Repository annotated classes -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-    <bean class="com.jaitlpro.usercryptodb.dialog.AddUserController" />
-    <bean class="com.jaitlpro.usercryptodb.dialog.MainMenuController" />
-    <bean class="com.jaitlpro.usercryptodb.dialog.FindUserByLoginController" />
+    <bean class="com.jaitlpro.usercryptodb.UIControllers.AddUserController" />
+    <bean class="com.jaitlpro.usercryptodb.UIControllers.MainMenuController" />
+    <bean class="com.jaitlpro.usercryptodb.UIControllers.FindUserByLoginController" />
 
 </beans>

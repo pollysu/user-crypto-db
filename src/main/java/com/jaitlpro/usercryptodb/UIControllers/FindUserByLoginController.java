@@ -1,4 +1,4 @@
-package com.jaitlpro.usercryptodb.dialog;
+package com.jaitlpro.usercryptodb.UIControllers;
 
 import com.jaitlpro.usercryptodb.entry.UserEntry;
 import com.jaitlpro.usercryptodb.exception.UserNotFoundException;

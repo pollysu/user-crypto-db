@@ -9,8 +9,8 @@ public class UserCryptEntry {
     @Id
     private String id;
     private String login;
-    private byte[] cryptoKey;
-    private byte[] cryptoData;
+    private byte[] cryptKey;
+    private byte[] cryptData;
 
     public String getId() {
         return id;
@@ -29,18 +29,18 @@ public class UserCryptEntry {
     }
 
     public byte[] getCryptKey() {
-        return cryptoKey;
+        return cryptKey;
     }
 
-    public void setCryptoKey(byte[] cryptoKey) {
-        this.cryptoKey = cryptoKey;
+    public void setCryptKey(byte[] cryptKey) {
+        this.cryptKey = cryptKey;
     }
 
-    public byte[] getCryptoData() {
-        return cryptoData;
+    public byte[] getCryptData() {
+        return cryptData;
     }
 
-    public void setCryptoData(byte[] cryptoData) {
-        this.cryptoData = cryptoData;
+    public void setCryptData(byte[] cryptData) {
+        this.cryptData = cryptData;
     }
 }

@@ -1,6 +1,6 @@
 package com.jaitlpro.usercryptodb.user;
 
-import com.jaitlpro.usercryptodb.crypt.CryptingUser;
+import com.jaitlpro.usercryptodb.crypt.AESCrypt;
 import com.jaitlpro.usercryptodb.dao.UserDAO;
 import com.jaitlpro.usercryptodb.entry.UserCryptEntry;
 import com.jaitlpro.usercryptodb.entry.UserEntry;
@@ -21,7 +21,7 @@ public class Users {
     public void saveUser(UserEntry userEntry) throws UserIsExistException {
         log.info(String.format("Save user: %s", userEntry.getLogin()));
 
-        UserCryptEntry  cryptEntry = CryptingUser.encryptUser(userEntry);
+        UserCryptEntry  cryptEntry = AESCrypt.encryptUser(userEntry);
 
         userDAO.saveUser(cryptEntry);
     }
@@ -31,7 +31,7 @@ public class Users {
 
         UserCryptEntry userCryptEntry = userDAO.findUserByLogin(login);
 
-        UserEntry userEntry = CryptingUser.decryptUser(userCryptEntry);
+        UserEntry userEntry = AESCrypt.decryptUser(userCryptEntry);
 
         return userEntry;
     }
